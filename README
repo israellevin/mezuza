@@ -1,0 +1,51 @@
+Mezuza
+
+A python script that uses openCV capture images of passers by, combined with a
+CGI shell script that copies those pictures into a persistent directory and a
+web application to dynamically load and count those pictures.
+
+How to use:
+
+0) Make sure you run all the commands from the mezuza directory
+
+1) Run the python script:
+
+    ./mezuza.py
+
+2) Run the web server:
+
+    python -m CGIHTTPServer
+
+3) Open a browser and load http://[server's IP]:8000/mezuza.html
+
+4) Profit.
+
+The python script can receive up to 7 arguments:
+
+1) ACTHIGH - number of inactive frames before accepting a new activation.
+Default is 10
+
+2) ACTLOW - number of active frames before accepting a new activation.
+Default is 3
+he n
+
+3) PIXCOUNT - minimal amount of active pixels for an active frame.
+Default is 10000
+
+4) TH - minimal difference between two "different" pixels.
+Default is 50
+
+5) ADAPT - weight of new frame in adaptive base frame.
+Default is 0.96
+
+6) CAMERA - number of the camera to use.
+Default is 0
+
+7) DISPLAY - any value here means that the script will display graphics.
+Assumes you are running something that can handle that (X forwarding?).
+Default is false
+
+Note: the python script copies the images to /shared and the shell script
+copies them to mezuza/img where the web application expects to find them.
+Both these directories are assumed to exist and be writable by the scripts.
+
