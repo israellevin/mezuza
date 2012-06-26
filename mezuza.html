@@ -6,9 +6,10 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
         <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.4.2.min.js"><\/script>');
 
+var limit;
+
 function check(images){
     $.getJSON('cgi-bin/imagelist.sh', function(data){
-        console.log(data);
         if(data && data.images && data.images.length !== images.length){
             draw(data.images);
         }
@@ -19,13 +20,15 @@ function check(images){
 }
 function draw(images){
     $('#container').empty();
-    $.each(images, function(i, e){
+    $.each(images.slice(-1 * limit), function(i, e){
         $('#container').prepend('<img src="' + e + '"/>');
     });
     $('#counter').text(images.length);
     check(images);
 }
 $(document).ready(function(){
+    limit = parseInt(prompt('Max images to display'), 10);
+    if(isNaN(limit)) limit = 10;
     check({});
 });
         </script>
